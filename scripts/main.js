@@ -56,12 +56,23 @@ function resize() {
 svg.call(tip)
 
 queue()
+    .defer(d3.json, 'data/ocean.json')
     .defer(d3.json, 'data/countries.json')
     .defer(d3.json, 'data/disputedAreas.json')
     .await(ready)
 
-function ready(error, world, disputed) {
+function ready(error, ocean, world, disputed) {
     if(error) throw error;
+
+    svg.append('g')
+        .attr('class', 'ocean')
+        .selectAll('path')
+        .data(ocean.features)
+        .enter().append('path')
+        .attr('d', path)
+        .style('fill', 'none')
+        .style('stroke', 'black')
+        .style('stroke-width', 0.75)
 
     svg.append('g')
         .attr('class', 'countries')
@@ -83,7 +94,26 @@ function ready(error, world, disputed) {
         .attr('d', path)
         .style('fill', '#dc3545')
         .style('fill-opacity', 0.4)
+        .style('opacity', 0.7)
         .style('stroke', '#dc3545')
         .style('stroke-width', 0.75)
+        // tooltips
+
+        .on('mouseover', function(d) {
+            tip.show(d)
+
+            d3.select(this)
+                .style('opacity', 1)
+                .style('stroke', '#dc3545')
+                .style('stroke-width', 2)
+        })
+        .on('mouseout', function(d) {
+            tip.hide(d)
+
+            d3.select(this)
+                .style('opacity', 0.7)
+                .style('stroke', '#dc3545')
+                .style('stroke-width', 0.75)
+        })
 
 }
