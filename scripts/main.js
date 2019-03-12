@@ -62,7 +62,7 @@ function resize() {
 svg.call(tip)
 
 queue()
-    .defer(d3.json, 'data/ocean.json')
+    .defer(d3.json, 'data/oceanTopo.json')
     .defer(d3.json, 'data/countries.json')
     .defer(d3.json, 'data/disputedAreas.json')
     .await(ready)
@@ -73,7 +73,7 @@ function ready(error, ocean, world, disputed) {
     svg.append('g')
         .attr('class', 'ocean')
         .selectAll('path')
-        .data(ocean.features)
+        .data(topojson.feature(ocean, ocean.objects.ocean).features)
         .enter().append('path')
         .attr('d', path)
         .style('fill', 'none')
