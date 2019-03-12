@@ -16,7 +16,7 @@ var mapColor = d3.scaleLinear()
 
 var projection = d3.geoWinkel3()
     .translate([width / 2, height / 2])
-    .scale(700)
+    .scale(300)
 
 var path = d3.geoPath()
     .projection(projection)
@@ -40,7 +40,7 @@ function resize() {
 
     projection
         .translate([width / 2, height / 2])
-        .scale(700)
+        .scale(300)
 
     d3.select('.content')
         .attr('width', width)
@@ -64,15 +64,15 @@ queue()
 function ready(error, ocean, world, disputed) {
     if(error) throw error;
 
-    svg.append('g')
-        .attr('class', 'ocean')
-        .selectAll('path')
-        .data(ocean.features)
-        .enter().append('path')
-        .attr('d', path)
-        .style('fill', 'none')
-        .style('stroke', 'black')
-        .style('stroke-width', 0.75)
+    // svg.append('g')
+    //     .attr('class', 'ocean')
+    //     .selectAll('path')
+    //     .data(ocean.features)
+    //     .enter().append('path')
+    //     .attr('d', path)
+    //     .style('fill', 'none')
+    //     .style('stroke', 'black')
+    //     .style('stroke-width', 0.75)
 
     svg.append('g')
         .attr('class', 'countries')
