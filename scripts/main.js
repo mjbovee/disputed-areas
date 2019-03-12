@@ -7,7 +7,13 @@ var tip = d3.tip()
     .attr('class', 'd3-tip')
     .offset([-10, 0])
     .html(function(d) {
-        return ''
+        return d.properties.NOTE_BRK !== null ? 
+        '<h2>' + d.properties.BRK_NAME + '</h2>' +
+        'Type: ' + d.properties.TYPE + '<br>' +
+        d.properties.NOTE_BRK:
+        '<h2>' + d.properties.BRK_NAME + '</h2>' +
+        'Type: ' + d.properties.TYPE + '<br>' +
+        'Admin. by ' + d.properties.ADMIN
     })
 
 var mapColor = d3.scaleLinear()
@@ -64,15 +70,15 @@ queue()
 function ready(error, ocean, world, disputed) {
     if(error) throw error;
 
-    // svg.append('g')
-    //     .attr('class', 'ocean')
-    //     .selectAll('path')
-    //     .data(ocean.features)
-    //     .enter().append('path')
-    //     .attr('d', path)
-    //     .style('fill', 'none')
-    //     .style('stroke', 'black')
-    //     .style('stroke-width', 0.75)
+    svg.append('g')
+        .attr('class', 'ocean')
+        .selectAll('path')
+        .data(ocean.features)
+        .enter().append('path')
+        .attr('d', path)
+        .style('fill', 'none')
+        .style('stroke', 'black')
+        .style('stroke-width', 0.75)
 
     svg.append('g')
         .attr('class', 'countries')
@@ -84,7 +90,7 @@ function ready(error, ocean, world, disputed) {
             return mapColor(d.properties.MAPCOLOR7)
         })
         .style('stroke', 'black')
-        .style('stroke-width', 0.75)
+        .style('stroke-width', 0.25)
 
     svg.append('g')
         .attr('class', 'disputedAreas')
@@ -96,7 +102,7 @@ function ready(error, ocean, world, disputed) {
         .style('fill-opacity', 0.4)
         .style('opacity', 0.7)
         .style('stroke', '#dc3545')
-        .style('stroke-width', 0.75)
+        .style('stroke-width', 0.25)
         // tooltips
 
         .on('mouseover', function(d) {
@@ -105,7 +111,7 @@ function ready(error, ocean, world, disputed) {
             d3.select(this)
                 .style('opacity', 1)
                 .style('stroke', '#dc3545')
-                .style('stroke-width', 2)
+                .style('stroke-width', 1)
         })
         .on('mouseout', function(d) {
             tip.hide(d)
@@ -113,7 +119,7 @@ function ready(error, ocean, world, disputed) {
             d3.select(this)
                 .style('opacity', 0.7)
                 .style('stroke', '#dc3545')
-                .style('stroke-width', 0.75)
+                .style('stroke-width', 0.25)
         })
 
 }
