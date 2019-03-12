@@ -75,4 +75,15 @@ function ready(error, world, disputed) {
         .style('stroke', 'black')
         .style('stroke-width', 0.75)
 
+    svg.append('g')
+        .attr('class', 'disputedAreas')
+        .selectAll('path')
+        .data(disputed.features)
+        .enter().append('path')
+        .attr('d', path)
+        .style('fill', '#dc3545')
+        .style('fill-opacity', 0.4)
+        .style('stroke', '#dc3545')
+        .style('stroke-width', 0.75)
+
 }
