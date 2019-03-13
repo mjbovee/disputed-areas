@@ -20,9 +20,10 @@ var mapColor = d3.scaleLinear()
     .domain([0, 7])
     .range(['#eeeeee', '#222222'])
 
-var projection = d3.geoWinkel3()
+var projection = d3.geoCylindricalStereographic()
     .translate([width / 2, height / 2])
     .scale(300)
+    .parallel(45)
 
 var path = d3.geoPath()
     .projection(projection)
@@ -62,23 +63,12 @@ function resize() {
 svg.call(tip)
 
 queue()
-    .defer(d3.json, 'data/oceanTopo.json')
     .defer(d3.json, 'data/countries.json')
     .defer(d3.json, 'data/disputedAreas.json')
     .await(ready)
 
-function ready(error, ocean, world, disputed) {
+function ready(error, world, disputed) {
     if(error) throw error;
-
-    svg.append('g')
-        .attr('class', 'ocean')
-        .selectAll('path')
-        .data(topojson.feature(ocean, ocean.objects.ocean).features)
-        .enter().append('path')
-        .attr('d', path)
-        .style('fill', 'none')
-        .style('stroke', 'black')
-        .style('stroke-width', 0.75)
 
     svg.append('g')
         .attr('class', 'countries')
